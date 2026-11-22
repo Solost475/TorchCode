@@ -1,18 +1,15 @@
 """PPO (Proximal Policy Optimization) clipped loss task."""
 
 TASK = {
-    "title": "PPO (Proximal Policy Optimization) Clipped Loss",
+    "title": "近端策略优化裁剪损失（PPO）",
     "difficulty": "Hard",
     "function_name": "ppo_loss",
     "hint": (
-        "Compute ratio r = exp(new_logps - old_logps_detached). "
-        "Form unclipped = r * adv_detached and clipped = clamp(r, 1-clip, 1+clip) * adv_detached. "
-        "Return the negative mean of min(unclipped, clipped). "
-        "Gradients should flow only through new_logps."
+        "计算比率 `r = exp(new_logps - old_logps_detached)`。构造 `unclipped = r * adv_detached` 和 `clipped = clamp(r, 1 - clip, 1 + clip) * adv_detached`。返回 `min(unclipped, clipped)` 的负均值，梯度仅通过 `new_logps` 传播。"
     ),
     "tests": [
         {
-            "name": "Basic shape & type",
+            "name": "基本形状与类型",
             "code": "\n"
             "import torch\n"
             "from torch import Tensor\n"
@@ -23,7 +20,7 @@ TASK = {
             "assert isinstance(loss, Tensor) and loss.dim() == 0, 'Loss must be scalar Tensor'\n"
         },
         {
-            "name": "Numeric check vs fixed value",
+            "name": "与固定数值对照",
             "code": "\n"
             "import torch\n"
             "new_logps = torch.tensor([0.0, -0.2, -0.4, -0.6])\n"
@@ -34,7 +31,7 @@ TASK = {
             "assert torch.allclose(loss, expected, atol=1e-4, rtol=0), 'Loss should match the expected numeric value on the fixed example'\n"
         },
         {
-            "name": "Gradient flows to new_logps only",
+            "name": "梯度仅传播到 new_logps",
             "code": "\n"
             "import torch\n"
             "new_logps = torch.randn(8, requires_grad=True)\n"

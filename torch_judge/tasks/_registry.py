@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 DIFFICULTY_ORDER = {"Easy": 0, "Medium": 1, "Hard": 2}
+DIFFICULTY_LABELS = {"Easy": "简单", "Medium": "中等", "Hard": "困难"}
 
 TASKS: dict[str, dict[str, Any]] = {}
 

@@ -1,13 +1,13 @@
 """Softmax implementation task."""
 
 TASK = {
-    "title": "Implement Softmax",
+    "title": "Softmax 函数",
     "difficulty": "Easy",
     "function_name": "my_softmax",
-    "hint": "softmax(x)_i = exp(x_i) / sum(exp(x_j)). Subtract max(x) first for numerical stability.",
+    "hint": "softmax(x)_i = exp(x_i) / sum(exp(x_j))。先减去 max(x)，以保证数值稳定性。",
     "tests": [
         {
-            "name": "Basic 1-D",
+            "name": "基础一维输入",
             "code": """
 import torch
 x = torch.tensor([1.0, 2.0, 3.0])
@@ -17,7 +17,7 @@ assert torch.allclose(out, expected, atol=1e-5), f'{out} vs {expected}'
 """,
         },
         {
-            "name": "2-D along dim=-1",
+            "name": "二维张量沿 dim=-1 计算",
             "code": """
 import torch
 x = torch.randn(4, 8)
@@ -29,7 +29,7 @@ assert torch.allclose(out.sum(dim=-1), torch.ones(4), atol=1e-5), 'Rows must sum
 """,
         },
         {
-            "name": "Numerical stability",
+            "name": "数值稳定性",
             "code": """
 import torch
 x = torch.tensor([1000., 1001., 1002.])

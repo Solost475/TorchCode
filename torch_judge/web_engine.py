@@ -16,7 +16,7 @@ def execute_code(task_id: str, user_code: str) -> Dict[str, Any]:
     if task is None:
         return {
             "success": False,
-            "error": f"Unknown task '{task_id}'.",
+            "error": f"未知题目 '{task_id}'。",
             "passed": 0,
             "total": 0,
             "tests": []
@@ -47,7 +47,7 @@ def execute_code(task_id: str, user_code: str) -> Dict[str, Any]:
             
             return {
                 "success": False,
-                "error": "Syntax or execution error in your code.",
+                "error": "代码存在语法错误或运行错误。",
                 "traceback": "".join(clean_tb).strip(),
                 "stdout": stdout_capture.getvalue(),
                 "stderr": stderr_capture.getvalue(),
@@ -59,7 +59,7 @@ def execute_code(task_id: str, user_code: str) -> Dict[str, Any]:
     if fn_name not in namespace:
         return {
             "success": False,
-            "error": f"Function or class '{fn_name}' not found. Did you define it?",
+            "error": f"未找到函数或类 '{fn_name}'，请确认已定义。",
             "stdout": stdout_capture.getvalue(),
             "stderr": stderr_capture.getvalue(),
             "passed": 0,
@@ -89,7 +89,7 @@ def execute_code(task_id: str, user_code: str) -> Dict[str, Any]:
                 test_passed = True
                 passed += 1
             except AssertionError as e:
-                error_msg = str(e) or "Assertion failed"
+                error_msg = str(e) or "断言失败"
             except Exception as e:
                 error_msg = f"{type(e).__name__}: {e}"
                 

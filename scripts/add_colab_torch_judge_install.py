@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 INSTALL_CELL_SOURCE = [
-    "# Install torch-judge in Colab (no-op in JupyterLab/Docker)\n",
+    "# 在 Colab 中安装 torch-judge（JupyterLab/Docker 中会跳过）\n",
     "try:\n",
     "    import google.colab\n",
     "    get_ipython().run_line_magic('pip', 'install -q torch-judge')\n",

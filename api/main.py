@@ -43,7 +43,7 @@ def list_tasks():
 def get_task_details(task_id: str):
     task = get_task(task_id)
     if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
+        raise HTTPException(status_code=404, detail="未找到该题目")
         
     template = TEMPLATES.get(task_id, {})
     return {
@@ -51,8 +51,8 @@ def get_task_details(task_id: str):
         "title": task["title"],
         "difficulty": task.get("difficulty", "Unknown"),
         "hint": task.get("hint", ""),
-        "description": template.get("description", "Description not found."),
-        "initial_code": template.get("initial_code", "# Write your code here.")
+        "description": template.get("description", "未找到题目描述。"),
+        "initial_code": template.get("initial_code", "# 在此编写你的代码。")
     }
 
 @app.post("/api/submit/{task_id}")

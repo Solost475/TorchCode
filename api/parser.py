@@ -22,7 +22,7 @@ def parse_notebook_template(filepath: str) -> dict:
                     # Filter out Colab badge lines
                     filtered_source = [
                         line for line in source 
-                        if "![Open In Colab]" not in line
+                        if "colab-badge.svg" not in line
                     ]
                     description = "".join(filtered_source).strip()
                     
@@ -31,8 +31,15 @@ def parse_notebook_template(filepath: str) -> dict:
                 source_str = "".join(source)
                 
                 # Check for the implementation placeholder
-                if "# ✏️ YOUR IMPLEMENTATION HERE" in source_str:
-                    initial_code = "import torch\nimport torch.nn as nn\nimport torch.nn.functional as F\nimport math\n\n" + source_str
+                if any(marker in source_str for marker in (
+                    "# ✏️ YOUR IMPLEMENTATION HERE",
+                    "# ✏️ 在此编写你的实现",
+                )):
+                    prefix = "import torch\nimport torch.nn as nn\nimport torch.nn.functional as F\n"
+                    if "from torch import Tensor" not in source_str:
+                        prefix += "from torch import Tensor\n"
+                    prefix += "import math\n\n"
+                    initial_code = prefix + source_str
                     
         return {
             "description": description,
@@ -41,8 +48,8 @@ def parse_notebook_template(filepath: str) -> dict:
     except Exception as e:
         print(f"Error parsing {filepath}: {e}")
         return {
-            "description": "Error loading description.",
-            "initial_code": "# Error loading template code."
+            "description": "题目描述加载失败。",
+            "initial_code": "# 代码模板加载失败。"
         }
 
 # Template filenames whose stem doesn't match their torch_judge task module name

@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from torch_judge.tasks import list_tasks, TASKS
+from torch_judge.tasks import DIFFICULTY_LABELS, list_tasks, TASKS
 
 PROGRESS_PATH = os.environ.get("PROGRESS_PATH", "data/progress.json")
 
@@ -72,7 +72,7 @@ def status() -> None:
     total = len(tasks)
 
     print(f"\n{'─' * 56}")
-    print(f"  🔥 TorchCode Progress: {solved_count}/{total} solved")
+    print(f"  🔥 TorchCode 练习进度：已完成 {solved_count}/{total} 道题")
     print(f"{'─' * 56}")
 
     for task_id, task in tasks:
@@ -84,9 +84,10 @@ def status() -> None:
         best = entry.get("best_time")
         time_str = f"  ⚡ {best*1000:.1f}ms" if best else ""
         attempts = entry.get("attempts", 0)
-        att_str = f"  ({attempts} attempts)" if attempts else ""
+        att_str = f"  （尝试 {attempts} 次）" if attempts else ""
 
-        print(f"  {icon} {task_id:<20s}{_RESET} {diff_c}[{diff}]{_RESET}{time_str}{att_str}")
+        diff_label = DIFFICULTY_LABELS.get(diff, diff)
+        print(f"  {icon} {task_id:<20s}{_RESET} {diff_c}[{diff_label}]{_RESET}{time_str}{att_str}")
         print(f"     {task['title']}")
 
     print(f"{'─' * 56}\n")
@@ -97,4 +98,4 @@ def reset_progress() -> None:
     path = Path(PROGRESS_PATH)
     if path.exists():
         path.unlink()
-    print("Progress reset.")
+    print("练习进度已重置。")

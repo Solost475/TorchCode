@@ -6,7 +6,7 @@ import time
 import traceback
 from typing import Any
 
-from torch_judge.tasks import get_task, TASKS
+from torch_judge.tasks import DIFFICULTY_LABELS, get_task, TASKS
 from torch_judge.progress import mark_solved, mark_attempted
 
 _RESET = "\033[0m"
@@ -44,15 +44,15 @@ def check(task_id: str) -> None:
     task = get_task(task_id)
     if task is None:
         available = ", ".join(f"'{k}'" for k in TASKS)
-        print(f"{_RED}Unknown task '{task_id}'. Available: {available}{_RESET}")
+        print(f"{_RED}未知题目 '{task_id}'。可用题目：{available}{_RESET}")
         return
 
     fn_name = task["function_name"]
     user_ns = _get_user_namespace()
 
     if fn_name not in user_ns:
-        print(f"\n{_RED}❌ Function/class '{fn_name}' not found in your notebook.{_RESET}")
-        print(f"{_DIM}   Make sure you defined it in a cell above and ran that cell.{_RESET}\n")
+        print(f"\n{_RED}❌ 笔记本中未找到函数或类 '{fn_name}'。{_RESET}")
+        print(f"{_DIM}   请先在上方单元格中定义它，并运行该单元格。{_RESET}\n")
         return
 
     user_fn = user_ns[fn_name]
@@ -60,7 +60,8 @@ def check(task_id: str) -> None:
     passed = 0
     total = len(tests)
 
-    print(f"\n{_BOLD}🧪 Testing: {task['title']} ({task['difficulty']}){_RESET}")
+    difficulty = DIFFICULTY_LABELS.get(task["difficulty"], task["difficulty"])
+    print(f"\n{_BOLD}🧪 正在测试：{task['title']}（{difficulty}）{_RESET}")
     print(f"{'─' * 50}")
 
     total_time = 0.0
@@ -78,7 +79,7 @@ def check(task_id: str) -> None:
             print(f"  {_GREEN}✅ [{i}/{total}] {test['name']}{_RESET} {_DIM}({elapsed*1000:.1f}ms){_RESET}")
         except AssertionError as e:
             elapsed = time.perf_counter() - t0
-            msg = str(e) or "Assertion failed"
+            msg = str(e) or "断言失败"
             print(f"  {_RED}❌ [{i}/{total}] {test['name']}{_RESET}")
             print(f"     {_RED}{msg}{_RESET}")
         except Exception as e:
@@ -92,20 +93,20 @@ def check(task_id: str) -> None:
     print(f"{'─' * 50}")
 
     if passed == total:
-        print(f"  {_GREEN}{_BOLD}🎉 All {total} tests passed! ({total_time*1000:.1f}ms total){_RESET}")
+        print(f"  {_GREEN}{_BOLD}🎉 全部 {total} 个测试通过！（总耗时 {total_time*1000:.1f}ms）{_RESET}")
         mark_solved(task_id, total_time)
-        print(f"  {_DIM}Progress saved. Run status() to see your dashboard.{_RESET}\n")
+        print(f"  {_DIM}进度已保存。运行 status() 查看练习进度。{_RESET}\n")
     else:
-        print(f"  {_YELLOW}📊 {passed}/{total} tests passed.{_RESET}")
+        print(f"  {_YELLOW}📊 已通过 {passed}/{total} 个测试。{_RESET}")
         mark_attempted(task_id)
-        print(f"  {_DIM}Keep going! Use hint(\"{task_id}\") if you're stuck.{_RESET}\n")
+        print(f"  {_DIM}继续加油！遇到困难时可运行 hint(\"{task_id}\") 查看提示。{_RESET}\n")
 
 
 def hint(task_id: str) -> None:
     """Show a hint for the given task."""
     task = get_task(task_id)
     if task is None:
-        print(f"{_RED}Unknown task '{task_id}'.{_RESET}")
+        print(f"{_RED}未知题目 '{task_id}'。{_RESET}")
         return
-    print(f"\n{_YELLOW}💡 Hint for {task['title']}:{_RESET}")
+    print(f"\n{_YELLOW}💡 {task['title']} 的提示：{_RESET}")
     print(f"   {task['hint']}\n")

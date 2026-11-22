@@ -1,19 +1,15 @@
 """OPD (On-Policy Distillation) Loss task."""
 
 TASK = {
-    "title": "OPD (On-Policy Distillation) Loss",
+    "title": "当前策略蒸馏损失（OPD）",
     "difficulty": "Hard",
     "function_name": "opd_loss",
     "hint": (
-        "Compute reverse KL from the student to each teacher: "
-        "KL(pi_student || pi_teacher) = sum_v p_student(v) * "
-        "(log p_student(v) - log p_teacher(v)). Average teacher KLs with "
-        "teacher_weights, apply mask over tokens if provided, and multiply by "
-        "temperature ** 2."
+        "计算学生策略到各教师策略的反向 KL：`KL(pi_student || pi_teacher) = sum_v p_student(v) * (log p_student(v) - log p_teacher(v))`。按 `teacher_weights` 对教师 KL 加权平均，如提供 `mask` 则在词元维度应用掩码，最后乘以 `temperature ** 2`。"
     ),
     "tests": [
         {
-            "name": "Basic shape & type",
+            "name": "基本形状与类型",
             "code": "\n"
             "import torch\n"
             "from torch import Tensor\n"
@@ -23,7 +19,7 @@ TASK = {
             "assert isinstance(loss, Tensor) and loss.dim() == 0, 'Loss must be a scalar Tensor'\n"
         },
         {
-            "name": "Zero when student matches teacher",
+            "name": "学生与教师一致时损失为零",
             "code": "\n"
             "import torch\n"
             "torch.manual_seed(0)\n"
@@ -33,7 +29,7 @@ TASK = {
             "assert torch.allclose(loss, torch.tensor(0.0), atol=1e-6), f'Expected near-zero loss, got {loss.item():.8f}'\n"
         },
         {
-            "name": "Numeric check vs single-teacher reverse KL",
+            "name": "与单教师反向 KL 对照",
             "code": "\n"
             "import torch\n"
             "import torch.nn.functional as F\n"
@@ -47,7 +43,7 @@ TASK = {
             "assert torch.allclose(loss, expected, atol=1e-6), f'{loss.item():.6f} vs {expected.item():.6f}'\n"
         },
         {
-            "name": "Multi-teacher weighted reverse KL",
+            "name": "多教师加权反向 KL",
             "code": "\n"
             "import torch\n"
             "import torch.nn.functional as F\n"
@@ -66,7 +62,7 @@ TASK = {
             "assert torch.allclose(loss, expected, atol=1e-6), f'{loss.item():.6f} vs {expected.item():.6f}'\n"
         },
         {
-            "name": "Mask ignores padded tokens",
+            "name": "掩码忽略填充词元",
             "code": "\n"
             "import torch\n"
             "import torch.nn.functional as F\n"
@@ -81,7 +77,7 @@ TASK = {
             "assert torch.allclose(loss, expected, atol=1e-6), 'Masked positions should not affect the loss'\n"
         },
         {
-            "name": "Gradient flows only through student logits",
+            "name": "梯度仅通过学生 logits 传播",
             "code": "\n"
             "import torch\n"
             "student_logits = torch.randn(2, 3, 4, requires_grad=True)\n"
@@ -92,7 +88,7 @@ TASK = {
             "assert teacher_logits.grad is None, 'Teacher logits should be treated as frozen targets'\n"
         },
         {
-            "name": "Temperature scaling",
+            "name": "温度缩放",
             "code": "\n"
             "import torch\n"
             "import torch.nn.functional as F\n"

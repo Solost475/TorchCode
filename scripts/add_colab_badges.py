@@ -20,7 +20,7 @@ def colab_url(filename: str, folder: str) -> str:
 
 
 def badge_markdown(filename: str, folder: str) -> str:
-    return f"[![Open In Colab]({BADGE_IMG})]({colab_url(filename, folder)})"
+    return f"[![在 Colab 中打开]({BADGE_IMG})]({colab_url(filename, folder)})"
 
 
 def process_notebook(path: Path, folder: str) -> bool:
