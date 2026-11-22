@@ -425,6 +425,13 @@ Thanks to everyone who has contributed to TorchCode.
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Solost475">
+                    <img src="https://avatars.githubusercontent.com/u/88924683?v=4" width="100;" alt="Solost475"/>
+                    <br />
+                    <sub><b>Solost475</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Zuozhuo">
                     <img src="https://avatars.githubusercontent.com/u/116483151?v=4" width="100;" alt="Zuozhuo"/>
                     <br />
