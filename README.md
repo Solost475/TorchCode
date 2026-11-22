@@ -383,6 +383,13 @@ Thanks to everyone who has contributed to TorchCode.
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Solost475">
+                    <img src="https://avatars.githubusercontent.com/u/88924683?v=4" width="100;" alt="Solost475"/>
+                    <br />
+                    <sub><b>Solost475</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/Ando233">
                     <img src="https://avatars.githubusercontent.com/u/74404658?v=4" width="100;" alt="Ando233"/>
                     <br />
@@ -410,6 +417,8 @@ Thanks to everyone who has contributed to TorchCode.
                     <sub><b>hrlics</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/HareshKarnan">
                     <img src="https://avatars.githubusercontent.com/u/5285984?v=4" width="100;" alt="HareshKarnan"/>
@@ -417,20 +426,11 @@ Thanks to everyone who has contributed to TorchCode.
                     <sub><b>HareshKarnan</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/ThierryHJ">
                     <img src="https://avatars.githubusercontent.com/u/51846529?v=4" width="100;" alt="ThierryHJ"/>
                     <br />
                     <sub><b>ThierryHJ</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/Solost475">
-                    <img src="https://avatars.githubusercontent.com/u/88924683?v=4" width="100;" alt="Solost475"/>
-                    <br />
-                    <sub><b>Solost475</b></sub>
                 </a>
             </td>
             <td align="center">
